@@ -86,15 +86,24 @@
   .menu-overlay.active{opacity:1; visibility:visible; transition:opacity .3s var(--ease)}
   .close-cont{position:absolute; right:4.5%; top:calc(env(safe-area-inset-top,0px) + 24px)}
   #close-menu{background:none; border:0; color:#fff; cursor:pointer; padding:6px}
-  .menu-overlay .columns{width:90.9090909091%; margin:0 auto; padding:calc(env(safe-area-inset-top,0px) + 110px) 0 60px; display:grid; grid-template-columns:repeat(3, 1fr); gap:44px 32px}
-  .menu-overlay h3{font-size:clamp(22px, 3vw, 34px); font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--accent); margin-bottom:14px; line-height:1.1}
-  .menu-overlay h3.sub{color:#fff}
-  .menu-overlay h3.sub:hover{color:var(--accent)}
-  .menu-overlay .first-row a{display:block}
-  .menu-overlay .first-row p{font-size:15px; font-weight:500; letter-spacing:1px; text-transform:uppercase; padding:5px 0; color:#d8d8d6}
-  .menu-overlay .first-row a:hover p{color:#fff}
-  @media (max-width:768px){ .menu-overlay .columns{grid-template-columns:1fr 1fr; gap:36px 20px} }
-  @media (max-width:420px){ .menu-overlay .columns{grid-template-columns:1fr} }
+  .menu-overlay{display:flex; flex-direction:column}
+  .mnav{width:90.9090909091%; margin:0 auto; padding-top:calc(env(safe-area-inset-top,0px) + 96px); display:flex; flex-direction:column}
+  .mnav .top, .grp-t{display:flex; align-items:center; justify-content:space-between; width:100%; padding:14px 0; border:0; border-bottom:1px solid rgba(255,255,255,.14); background:none; color:#fff; font:700 clamp(26px, 7.4vw, 40px)/1.1 var(--sans); letter-spacing:.02em; text-transform:uppercase; text-align:left; cursor:pointer}
+  .mnav .top:hover, .grp-t:hover, .grp-t[aria-expanded="true"]{color:var(--accent)}
+  .pm{position:relative; width:18px; height:18px; flex-shrink:0}
+  .pm::before, .pm::after{content:""; position:absolute; left:0; right:0; top:50%; height:2px; margin-top:-1px; background:currentColor; transition:transform .3s var(--ease)}
+  .pm::after{transform:rotate(90deg)}
+  .grp-t[aria-expanded="true"] .pm::after{transform:rotate(0deg)}
+  .grp-b{display:grid; grid-template-rows:0fr; transition:grid-template-rows .4s cubic-bezier(.19,1,.22,1)}
+  .grp-b.open{grid-template-rows:1fr}
+  .grp-in{overflow:hidden; display:grid; grid-template-columns:1fr 1fr; column-gap:16px}
+  .grp-in a{display:block; padding:9px 0}
+  .grp-in a:first-child{margin-top:10px} .grp-in a:nth-child(2){margin-top:10px}
+  .grp-in p{font-size:14px; font-weight:500; letter-spacing:1px; text-transform:uppercase; color:#d8d8d6}
+  .grp-in a:hover p{color:#fff}
+  .grp-b.open .grp-in{padding-bottom:12px}
+  .mfoot{width:90.9090909091%; margin:auto auto 0; padding:32px 0 calc(env(safe-area-inset-bottom,0px) + 28px); display:flex; flex-direction:column; gap:6px; font-size:15px; color:#bdbcb8}
+  .mfoot a:hover{color:#fff} .mlang{margin-top:8px; font-weight:600; letter-spacing:.08em}
 
   /* ================= hero (v1: letter reveal + counter) ================= */
   .hero{--g:clamp(16px, 3vw, 40px); --e:cubic-bezier(.2,.7,.1,1); position:relative; height:100vh; height:100svh; min-height:560px; background:#000; color:#fff; overflow:hidden; touch-action:pan-y; font-family:"Archivo", "Helvetica Neue", Arial, sans-serif}
@@ -335,18 +344,21 @@
 
 <div class="menu-overlay" id="menu-overlay" aria-hidden="true">
   <div class="close-cont"><button id="close-menu" type="button" aria-label="Menüyü kapat"><svg width="26" height="26" viewBox="0 0 26 26"><path d="M2 2l22 22M24 2L2 24" stroke="currentColor" stroke-width="2.4"/></svg></button></div>
-  <nav class="columns" aria-label="Menü">
-    <div class="column"><div class="first-row"><h3>Hizmetler</h3>
-      <a href="#hizmetler"><p>Reklam Filmi</p></a><a href="#hizmetler"><p>Tanıtım Filmi</p></a><a href="#hizmetler"><p>Sosyal Medya</p></a><a href="#hizmetler"><p>Kurum İçi İletişim</p></a><a href="#hizmetler"><p>Canlı Yayın &amp; Reji</p></a><a href="#hizmetler"><p>Post Prodüksiyon</p></a><a href="#hizmetler"><p>Prodüksiyon Hizmetleri</p></a>
-    </div></div>
-    <div class="column"><div class="first-row"><a href="#isler"><h3 class="sub">Projeler</h3></a></div></div>
-    <div class="column"><div class="first-row"><h3>Yönetmenler</h3>
-      <a href="#"><p>Fatih Ahmet</p></a><a href="#"><p>Murad</p></a><a href="#"><p>Murat</p></a><a href="#"><p lang="en">The Rifles</p></a><a href="#"><p>Derhan &amp; Irmak</p></a><a href="#"><p>İlay</p></a><a href="#"><p>Gizem</p></a><a href="#"><p>Burak Kaan</p></a><a href="#"><p>Ömer Can</p></a><a href="#"><p>Merve</p></a><a href="#"><p>Dünay</p></a><a href="#"><p>Kıvanç</p></a><a href="#"><p>Osman</p></a>
-    </div></div>
-    <div class="column"><div class="first-row"><a href="#biz"><h3 class="sub">Hakkımızda</h3></a></div></div>
-    <div class="column"><div class="first-row"><a href="#"><h3 class="sub">Blog</h3></a></div></div>
-    <div class="column"><div class="first-row"><a href="#iletisim"><h3 class="sub">İletişim</h3></a></div></div>
+  <nav class="mnav" aria-label="Menü">
+    <div class="grp">
+      <button class="grp-t" type="button" aria-expanded="false" aria-controls="m-hizmet">Hizmetler<span class="pm" aria-hidden="true"></span></button>
+      <div class="grp-b" id="m-hizmet"><div class="grp-in"><a href="#hizmetler"><p>Reklam Filmi</p></a><a href="#hizmetler"><p>Tanıtım Filmi</p></a><a href="#hizmetler"><p>Sosyal Medya</p></a><a href="#hizmetler"><p>Kurum İçi İletişim</p></a><a href="#hizmetler"><p>Canlı Yayın &amp; Reji</p></a><a href="#hizmetler"><p>Post Prodüksiyon</p></a><a href="#hizmetler"><p>Prodüksiyon Hizmetleri</p></a></div></div>
+    </div>
+    <a class="top" href="#isler">Projeler</a>
+    <div class="grp">
+      <button class="grp-t" type="button" aria-expanded="false" aria-controls="m-yonetmen">Yönetmenler<span class="pm" aria-hidden="true"></span></button>
+      <div class="grp-b" id="m-yonetmen"><div class="grp-in"><a href="#"><p>Fatih Ahmet</p></a><a href="#"><p>Murad</p></a><a href="#"><p>Murat</p></a><a href="#"><p lang="en">The Rifles</p></a><a href="#"><p>Derhan &amp; Irmak</p></a><a href="#"><p>İlay</p></a><a href="#"><p>Gizem</p></a><a href="#"><p>Burak Kaan</p></a><a href="#"><p>Ömer Can</p></a><a href="#"><p>Merve</p></a><a href="#"><p>Dünay</p></a><a href="#"><p>Kıvanç</p></a><a href="#"><p>Osman</p></a></div></div>
+    </div>
+    <a class="top" href="#biz">Hakkımızda</a>
+    <a class="top" href="#">Blog</a>
+    <a class="top" href="#iletisim">İletişim</a>
   </nav>
+  <div class="mfoot"><a href="tel:+902122119033">0212 211 90 33</a><a href="mailto:info@piktorayapim.com">info@piktorayapim.com</a><span class="mlang"><b>TR</b> / <a href="#" lang="en">EN</a></span></div>
 </div>
 
 <main>
@@ -677,6 +689,13 @@
     if (lenis) { open ? lenis.stop() : lenis.start(); } else document.body.style.overflow = open ? 'hidden' : '';
   }
   openBtn.addEventListener('click', function(){ setMenu(true); });
+  overlay.querySelectorAll('.grp-t').forEach(function(t){
+    t.addEventListener('click', function(){
+      var open = t.getAttribute('aria-expanded') !== 'true';
+      overlay.querySelectorAll('.grp-t').forEach(function(o){ o.setAttribute('aria-expanded', 'false'); document.getElementById(o.getAttribute('aria-controls')).classList.remove('open'); });
+      if (open) { t.setAttribute('aria-expanded', 'true'); document.getElementById(t.getAttribute('aria-controls')).classList.add('open'); }
+    });
+  });
   document.getElementById('close-menu').addEventListener('click', function(){ setMenu(false); });
   overlay.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setMenu(false); }); });
   document.addEventListener('keydown', function(e){
