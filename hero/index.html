@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Piktora Yapım · Hero v1</title>
+<meta name="description" content="Piktora; ajanslar, markalar ve kurumlar için reklam filmi, tanıtım filmi, sosyal medya ve kurum içi iletişim videoları üreten, fikirden yayına tam hizmet veren bir prodüksiyon şirketidir.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=Big+Shoulders+Display:wght@700;800&display=swap">
+<link rel="preload" as="image" href="../assets/hero-axa.webp" fetchpriority="high">
+<style>
+  :root{
+    --ink:#121212; --ink-2:#3a3a38; --muted:#6d6c68; --paper:#e7e6e3; --paper-2:#dcdbd7; --rule:#1d1d1b;
+    --white:#ffffff; --red:#e3121b;
+    --display:"Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+    --sans:"Archivo", "Helvetica Neue", Arial, sans-serif;
+    --gutter:clamp(16px, 3vw, 40px);
+    --ease:cubic-bezier(.2,.7,.1,1);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans); font-size:16px; line-height:1.5}
+  img{max-width:100%; display:block}
+  a{color:inherit; text-decoration:none}
+  :focus-visible{outline:2px solid var(--red); outline-offset:3px}
+
+  /* ---------- header ---------- */
+  .site-head{position:absolute; inset:0 0 auto 0; z-index:30; padding:calc(env(safe-area-inset-top,0px) + 22px) var(--gutter) 0; display:flex; align-items:center; justify-content:space-between; gap:24px; color:var(--white)}
+  .logo img{width:clamp(118px, 12vw, 176px); height:auto}
+  .nav{display:flex; gap:clamp(16px, 2vw, 30px); font-size:13px; font-weight:600; letter-spacing:.14em; font-variation-settings:"wdth" 112}
+  .nav a{position:relative; padding-block:6px}
+  .nav a::after{content:""; position:absolute; left:0; right:0; bottom:0; height:1px; background:currentColor; transform:scaleX(0); transform-origin:left; transition:transform .35s var(--ease)}
+  .nav a:hover::after{transform:scaleX(1)}
+  .burger{display:none; background:none; border:0; color:inherit; padding:8px; margin-right:-8px; cursor:pointer}
+  .burger span{display:block; width:26px; height:2px; background:currentColor; margin:6px 0}
+  .menu{position:fixed; inset:0; z-index:40; background:var(--ink); color:var(--white); padding:calc(env(safe-area-inset-top,0px) + 22px) var(--gutter) 32px; display:flex; flex-direction:column; transform:translateY(-100%); transition:transform .5s var(--ease); visibility:hidden}
+  .menu.open{transform:none; visibility:visible}
+  .menu-top{display:flex; justify-content:space-between; align-items:center}
+  .menu-close{background:none; border:0; color:inherit; font:600 13px var(--sans); letter-spacing:.14em; cursor:pointer; padding:8px 0}
+  .menu nav{display:flex; flex-direction:column; margin-top:auto}
+  .menu nav a{font-family:var(--display); font-weight:800; font-size:clamp(46px, 13vw, 88px); line-height:1.02; text-transform:uppercase}
+  .menu-foot{margin-top:28px; font-size:14px; color:#bdbcb8; display:flex; flex-direction:column; gap:4px}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative; height:100vh; height:100svh; min-height:560px; background:#000; color:var(--white); overflow:hidden; touch-action:pan-y}
+  .slide{position:absolute; inset:0; opacity:0; transition:opacity 1.1s ease}
+  .slide.active{opacity:1; z-index:1}
+  .slide img{width:100%; height:100%; object-fit:cover; transform:scale(1.1); transition:transform 8s linear}
+  .slide.active img{transform:scale(1)}
+  .hero::after{content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
+    background:linear-gradient(180deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,0) 22%, rgba(0,0,0,0) 45%, rgba(0,0,0,.72) 100%)}
+  .credits{position:absolute; z-index:5; left:var(--gutter); right:var(--gutter); bottom:clamp(92px, 14vh, 150px)}
+  .credits .client{font-size:15px; margin:0 0 6px}
+  .credits .client b{font-weight:700}
+  .credits h2{margin:0; font-weight:800; font-variation-settings:"wdth" 125; line-height:.95; letter-spacing:-.01em; font-size:clamp(34px, 7.4vw, 104px); max-width:14ch; overflow:hidden; padding-bottom:.08em}
+  .credits h2 .w{display:inline-block; white-space:nowrap}
+  .credits h2 .c{display:inline-block; transform:translateY(105%); transition:transform .8s var(--ease); transition-delay:calc(var(--i) * 28ms)}
+  .credits.in h2 .c{transform:none}
+  .credits .meta{display:flex; flex-wrap:wrap; gap:6px 22px; margin:14px 0 0; font-size:14px; color:#e9e8e4}
+  .credits .meta span{opacity:0; transform:translateY(10px); transition:opacity .6s ease .45s, transform .6s var(--ease) .45s}
+  .credits.in .meta span{opacity:1; transform:none}
+  .watch{display:inline-flex; align-items:center; gap:10px; margin-top:18px; font-size:13px; font-weight:600; letter-spacing:.14em; font-variation-settings:"wdth" 112}
+  .watch i{width:34px; height:34px; border-radius:50%; background:var(--red); display:grid; place-items:center}
+  .arrow{position:absolute; z-index:6; top:50%; transform:translateY(-50%); background:none; border:0; color:var(--white); padding:14px; cursor:pointer; opacity:.85}
+  .arrow:hover{opacity:1}
+  .arrow.prev{left:calc(var(--gutter) - 14px)} .arrow.next{right:calc(var(--gutter) - 14px)}
+  .scroll-cue{position:absolute; z-index:6; left:50%; bottom:26px; transform:translateX(-50%); font-size:13px; display:flex; flex-direction:column; align-items:center; gap:8px}
+  .scroll-cue::after{content:""; width:1px; height:28px; background:linear-gradient(var(--white), transparent); animation:cue 1.8s ease-in-out infinite}
+  @keyframes cue{0%{transform:scaleY(0); transform-origin:top} 50%{transform:scaleY(1); transform-origin:top} 51%{transform-origin:bottom} 100%{transform:scaleY(0); transform-origin:bottom}}
+  .counter{position:absolute; z-index:6; right:var(--gutter); bottom:32px; display:flex; align-items:center; gap:12px; font-size:13px; font-variant-numeric:tabular-nums; letter-spacing:.08em}
+  .bar{width:72px; height:2px; background:rgba(255,255,255,.3); overflow:hidden}
+  .bar i{display:block; height:100%; background:var(--white); transform:scaleX(0); transform-origin:left}
+  .bar i.run{animation:fill var(--dur) linear forwards}
+  @keyframes fill{to{transform:scaleX(1)}}
+
+  /* ---------- statement ---------- */
+  .statement{padding:clamp(72px, 12vw, 150px) var(--gutter) clamp(64px, 9vw, 110px)}
+  .statement h2{margin:0; font-family:var(--display); font-weight:800; text-transform:uppercase; line-height:1.04; letter-spacing:-.005em; font-size:clamp(44px, 7vw, 108px); max-width:24ch; text-wrap:balance}
+  .statement p{margin:22px 0 0; font-size:clamp(17px, 1.6vw, 21px); line-height:1.45; color:var(--ink-2); max-width:62ch}
+  .more{display:flex; justify-content:flex-end; margin-top:28px}
+  .more a{font-size:12.5px; font-weight:700; letter-spacing:.14em; font-variation-settings:"wdth" 112; display:inline-flex; gap:10px; align-items:center}
+  .more a span{display:inline-block; transition:transform .3s var(--ease)} .more a:hover span{transform:translateX(5px)}
+
+  /* ---------- clients ---------- */
+  .clients{padding:0 var(--gutter) clamp(56px, 8vw, 100px)}
+  .label{border-top:1px solid var(--rule); padding-top:12px; font-size:12px; font-weight:700; letter-spacing:.12em; font-variation-settings:"wdth" 112; text-transform:uppercase}
+  .marquee{overflow:hidden; margin-top:clamp(32px, 5vw, 64px); -webkit-mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)}
+  .track{display:flex; width:max-content; animation:slide 42s linear infinite}
+  .marquee:hover .track{animation-play-state:paused}
+  .track ul{display:flex; align-items:center; gap:clamp(40px, 6vw, 84px); list-style:none; margin:0; padding:0 clamp(20px, 3vw, 42px)}
+  .track li{font-family:var(--display); font-weight:800; font-size:clamp(28px, 3.4vw, 44px); color:#8f8e8a; text-transform:uppercase; white-space:nowrap; letter-spacing:.01em}
+  .track li:nth-child(3n+2){font-family:var(--sans); font-weight:700; font-variation-settings:"wdth" 100; text-transform:none; letter-spacing:-.02em}
+  @keyframes slide{to{transform:translateX(-50%)}}
+
+  /* ---------- work ---------- */
+  .work{padding:clamp(40px, 6vw, 80px) var(--gutter) clamp(80px, 10vw, 140px)}
+  .work h2{margin:0 0 clamp(36px, 6vw, 80px); font-family:var(--display); font-weight:800; text-transform:uppercase; line-height:1.02; font-size:clamp(52px, 8vw, 124px)}
+  .grid{display:grid; grid-template-columns:repeat(12, 1fr); column-gap:clamp(14px, 1.6vw, 24px); row-gap:clamp(48px, 7vw, 96px); align-items:start}
+  .card{display:block}
+  .card .t{display:flex; gap:10px; font-size:12px; font-weight:700; letter-spacing:.08em; font-variation-settings:"wdth" 110; text-transform:uppercase; margin-bottom:12px}
+  .card .t em{font-style:normal; color:var(--muted)}
+  .frame{position:relative; overflow:hidden; background:var(--paper-2)}
+  .frame img{width:100%; height:100%; object-fit:cover; transition:transform 1.2s var(--ease)}
+  .frame .go{position:absolute; left:16px; bottom:14px; color:var(--white); font-size:12px; font-weight:700; letter-spacing:.14em; font-variation-settings:"wdth" 112; opacity:0; transform:translateY(8px); transition:opacity .4s ease, transform .4s var(--ease); text-shadow:0 1px 12px rgba(0,0,0,.5)}
+  .card:hover .frame img{transform:scale(1.045)}
+  .card:hover .go, .card:focus-visible .go{opacity:1; transform:none}
+  .card .sub{margin:10px 0 0; font-size:14px; color:var(--ink-2)}
+  .c1{grid-column:1 / span 5} .c1 .frame{aspect-ratio:16/10}
+  .c2{grid-column:6 / span 4} .c2 .frame{aspect-ratio:4/3}
+  .c3{grid-column:10 / span 3} .c3 .frame{aspect-ratio:4/5}
+  .c4{grid-column:2 / span 3} .c4 .frame{aspect-ratio:3/4}
+  .c5{grid-column:5 / span 5} .c5 .frame{aspect-ratio:16/10}
+  .c6{grid-column:10 / span 3} .c6 .frame{aspect-ratio:3/4}
+  .c7{grid-column:1 / span 4} .c7 .frame{aspect-ratio:4/3}
+  .c8{grid-column:5 / span 3} .c8 .frame{aspect-ratio:4/5}
+  .c9{grid-column:8 / span 5} .c9 .frame{aspect-ratio:16/10}
+  .c2, .c5, .c8{margin-top:clamp(0px, 4vw, 60px)}
+  .all{display:flex; justify-content:center; margin-top:clamp(56px, 8vw, 110px)}
+  .all a{font-family:var(--display); font-weight:800; font-size:clamp(34px, 4.4vw, 60px); text-transform:uppercase; border-bottom:3px solid var(--ink); line-height:1}
+
+  /* ---------- contact ---------- */
+  .contact{position:relative; color:var(--white); background:#0d0d0d; overflow:hidden}
+  .contact > img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.5}
+  .contact::before{content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.65)); z-index:1}
+  .contact-in{position:relative; z-index:2; padding:clamp(64px, 9vw, 120px) var(--gutter) calc(env(safe-area-inset-bottom,0px) + 28px)}
+  .big{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:clamp(4px, 1vw, 10px)}
+  .big a{display:inline-flex; align-items:flex-start; gap:8px; font-weight:500; font-variation-settings:"wdth" 100; text-transform:uppercase; letter-spacing:-.035em; line-height:1; font-size:clamp(34px, 7.2vw, 96px); overflow-wrap:anywhere}
+  .big a.mail{font-size:clamp(20px, 5.9vw, 96px); white-space:nowrap}
+  .big a sup{white-space:nowrap; font-size:11px; letter-spacing:.12em; font-weight:700; font-variation-settings:"wdth" 112; margin-top:.4em; opacity:.85}
+  .big a:hover{color:#ffd9d9}
+  .addr{margin:26px 0 0; font-size:15px; color:#d6d5d1; max-width:50ch}
+  .foot{border-top:1px solid rgba(255,255,255,.55); margin-top:clamp(48px, 7vw, 90px); padding-top:clamp(32px, 5vw, 56px); display:flex; justify-content:space-between; align-items:flex-end; gap:32px; flex-wrap:wrap}
+  .foot .logo img{width:clamp(160px, 22vw, 300px)}
+  .foot nav{display:flex; flex-direction:column; align-items:flex-end; gap:6px; font-size:12.5px; font-weight:700; letter-spacing:.12em; font-variation-settings:"wdth" 112}
+  .legal{border-top:1px solid rgba(255,255,255,.55); margin-top:clamp(28px, 4vw, 48px); padding-top:18px; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; font-size:12px; font-weight:700; letter-spacing:.1em; font-variation-settings:"wdth" 112; text-transform:uppercase}
+  .legal a{opacity:.85} .legal a:hover{opacity:1}
+
+  .reveal{opacity:1; transform:none}
+  .js .reveal{opacity:0; transform:translateY(24px); transition:opacity .9s ease, transform .9s var(--ease)}
+  .js .reveal.on{opacity:1; transform:none}
+
+  @media (max-width:980px){
+    .nav{display:none} .burger{display:block}
+    .grid{grid-template-columns:repeat(6, 1fr)}
+    .c1,.c5,.c9{grid-column:1 / -1}
+    .c2,.c4,.c7{grid-column:1 / span 3} .c3,.c6,.c8{grid-column:4 / span 3}
+    .c2, .c5, .c8{margin-top:0} .c3,.c6,.c8{margin-top:clamp(0px, 8vw, 60px)}
+    .c2 .frame,.c3 .frame,.c4 .frame,.c6 .frame,.c7 .frame,.c8 .frame{aspect-ratio:4/5}
+  }
+  @media (max-width:640px){
+    .arrow{display:none}
+    .credits{bottom:104px}
+    .counter{bottom:34px; right:var(--gutter)}
+    .scroll-cue{left:var(--gutter); transform:none; align-items:flex-start}
+    .grid{grid-template-columns:1fr; row-gap:44px}
+    .grid .card{grid-column:1 / -1; margin-top:0}
+    .grid .frame{aspect-ratio:4/3 !important}
+    .foot nav{align-items:flex-start}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none !important; transition:none !important}
+    .slide img{transform:none} .credits h2 .c{transform:none}
+    .credits .meta span{opacity:1; transform:none}
+    .js .reveal{opacity:1; transform:none}
+  }
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js');</script>
+
+<header class="site-head">
+  <a class="logo" href="#" aria-label="Piktora Yapım ana sayfa"><img src="../assets/logo-white.webp" width="520" height="181" alt="Piktora Production House"></a>
+  <nav class="nav" aria-label="Ana menü">
+    <a href="#isler">HİZMETLER</a>
+    <a href="#isler">PROJELER</a>
+    <a href="#">YÖNETMENLER</a>
+    <a href="#biz">HAKKIMIZDA</a>
+    <a href="#">BLOG</a>
+    <a href="#iletisim">İLETİŞİM</a>
+    <a href="#" lang="en">EN</a>
+  </nav>
+  <button class="burger" type="button" aria-label="Menüyü aç" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+</header>
+
+<div class="menu" id="menu" aria-hidden="true">
+  <div class="menu-top">
+    <img src="../assets/logo-white.webp" width="520" height="181" alt="" style="width:118px;height:auto">
+    <button class="menu-close" type="button">KAPAT</button>
+  </div>
+  <nav aria-label="Mobil menü">
+    <a href="#isler">Hizmetler</a>
+    <a href="#isler">Projeler</a>
+    <a href="#">Yönetmenler</a>
+    <a href="#biz">Hakkımızda</a>
+    <a href="#">Blog</a>
+    <a href="#iletisim">İletişim</a>
+  </nav>
+  <div class="menu-foot"><span>0212 211 90 33</span><span>info@piktorayapim.com</span></div>
+</div>
+
+<main>
+  <section class="hero" aria-roledescription="carousel" aria-label="Öne çıkan filmler">
+    <div class="slide active"><img src="../assets/hero-axa.webp" alt="AXA Sigorta reklam filminden bir kare: Filenin Sultanları tribünde bayraklarla" width="1280" height="720" fetchpriority="high"></div>
+    <div class="slide"><img src="../assets/hero-beymen.webp" alt="Beymen Balmain imaj filminden bir kare" width="1111" height="720" loading="lazy"></div>
+    <div class="slide"><img src="../assets/hero-albayrak.webp" alt="Albayrak Holding Pakistan tanıtım filminden bir köy sahnesi" width="1193" height="720" loading="lazy"></div>
+    <div class="slide"><img src="../assets/hero-pedalist.webp" alt="İBB Pedalist filminden sınıfta bir öğrenci" width="1280" height="720" loading="lazy"></div>
+    <div class="slide"><img src="../assets/hero-ziraat.webp" alt="Ziraat Bankası Ulus binası" width="1280" height="720" loading="lazy"></div>
+
+    <div class="credits" aria-live="polite">
+      <p class="client">Müşteri: <b id="c-client"></b></p>
+      <h2 id="c-title"></h2>
+      <p class="meta" id="c-meta"></p>
+      <a class="watch" id="c-link" href="#"><i aria-hidden="true"><svg width="10" height="12" viewBox="0 0 10 12"><path d="M0 0l10 6-10 6z" fill="#fff"/></svg></i>FİLMİ İZLE</a>
+    </div>
+
+    <button class="arrow prev" type="button" aria-label="Önceki film"><svg width="18" height="30" viewBox="0 0 18 30" fill="none"><path d="M16 2L3 15l13 13" stroke="currentColor" stroke-width="2.4"/></svg></button>
+    <button class="arrow next" type="button" aria-label="Sonraki film"><svg width="18" height="30" viewBox="0 0 18 30" fill="none"><path d="M2 2l13 13L2 28" stroke="currentColor" stroke-width="2.4"/></svg></button>
+    <a class="scroll-cue" href="#biz">Kaydır</a>
+    <div class="counter"><span id="c-num">01</span><span class="bar"><i id="c-bar"></i></span><span id="c-total">05</span></div>
+  </section>
+
+  <section class="statement" id="biz">
+    <h2 class="reveal">Piktora, fikirden yayına tam hizmet veren bir prodüksiyon şirketidir.</h2>
+    <p class="reveal">2007'den bu yana ajanslar, markalar ve kurumlarla birlikte reklam filmi, tanıtım filmi, sosyal medya ve kurum içi iletişim videoları üretiyoruz. Senaryodan cast seçimine, çekimden kurgu ve renk düzenlemeye kadar her aşama tek çatı altında; ekipman gücümüz kendi markamız Kamera Fabrikası'ndan.</p>
+    <div class="more"><a href="#">DAHA FAZLA <span aria-hidden="true">→</span></a></div>
+  </section>
+
+  <section class="clients" aria-label="Müşterilerimiz">
+    <div class="label">Birlikte çalıştığımız markalardan bazıları</div>
+    <div class="marquee">
+      <div class="track">
+        <ul>
+          <li>AXA Sigorta</li><li lang="en">Domino's</li><li lang="en">TotalEnergies</li><li lang="en">Vodafone</li><li>Ziraat Bankası</li><li>Beymen</li><li lang="en">Honor</li><li>hepsiburada</li><li lang="en">PUBG Mobile</li><li lang="en">MediaMarkt</li><li>DenizBank</li><li>NN Hayat</li><li>Avansas</li><li>Kariyer.net</li><li>Martı</li><li>İBB</li>
+        </ul>
+        <ul aria-hidden="true">
+          <li>AXA Sigorta</li><li lang="en">Domino's</li><li lang="en">TotalEnergies</li><li lang="en">Vodafone</li><li>Ziraat Bankası</li><li>Beymen</li><li lang="en">Honor</li><li>hepsiburada</li><li lang="en">PUBG Mobile</li><li lang="en">MediaMarkt</li><li>DenizBank</li><li>NN Hayat</li><li>Avansas</li><li>Kariyer.net</li><li>Martı</li><li>İBB</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="work" id="isler">
+    <h2 class="reveal">Öne çıkan<br>işler</h2>
+    <div class="grid">
+      <a class="card c1 reveal" href="#"><div class="t">1 <em>/</em> AXA Sigorta</div><div class="frame"><img src="../assets/w-axa.webp" alt="" loading="lazy" width="960" height="540"><span class="go">PROJEYİ İZLE</span></div><p class="sub">Filenin Sultanları · Reklam filmi</p></a>
+      <a class="card c2 reveal" href="#"><div class="t">2 <em>/</em> <span lang="en">PUBG Mobile</span></div><div class="frame"><img src="../assets/w-pubg.webp" alt="" loading="lazy" width="960" height="489"><span class="go">PROJEYİ İZLE</span></div><p class="sub">Türkiye'nin ilk dikey dizisi</p></a>
+      <a class="card c3 reveal" href="#"><div class="t">3 <em>/</em> Beymen</div><div class="frame"><img src="../assets/w-beymen.webp" alt="" loading="lazy" width="960" height="622" style="object-position:30% 50%"><span class="go">PROJEYİ İZLE</span></div><p class="sub">Balmain · İmaj filmi</p></a>
+      <a class="card c4 reveal" href="#"><div class="t">4 <em>/</em> <span lang="en">MediaMarkt</span></div><div class="frame"><img src="../assets/w-mediamarkt.webp" alt="" loading="lazy" width="960" height="540" style="object-position:62% 50%"><span class="go">PROJEYİ İZLE</span></div><p class="sub">Şahane Cuma · Reklam filmi</p></a>
+      <a class="card c5 reveal" href="#"><div class="t">5 <em>/</em> <span lang="en">Domino's</span></div><div class="frame"><img src="../assets/w-dominos.webp" alt="" loading="lazy" width="960" height="600"><span class="go">PROJEYİ İZLE</span></div><p class="sub">Başarı hikâyeleri serisi · 8 gün, 10 kişilik ekip</p></a>
+      <a class="card c6 reveal" href="#"><div class="t">6 <em>/</em> <span lang="en">TotalEnergies</span></div><div class="frame"><img src="../assets/w-total.webp" alt="" loading="lazy" width="960" height="540" style="object-position:50% 50%"><span class="go">PROJEYİ İZLE</span></div><p class="sub">A Millî Kadın Basketbol Takımı</p></a>
+      <a class="card c7 reveal" href="#"><div class="t">7 <em>/</em> Hepsiburada</div><div class="frame"><img src="../assets/w-hepsiburada.webp" alt="" loading="lazy" width="960" height="540"><span class="go">PROJEYİ İZLE</span></div><p class="sub">Yeni iPhone 17 · Reklam filmi</p></a>
+      <a class="card c8 reveal" href="#"><div class="t">8 <em>/</em> Ziraat Bankası</div><div class="frame"><img src="../assets/w-ziraat.webp" alt="" loading="lazy" width="768" height="512"><span class="go">PROJEYİ İZLE</span></div><p class="sub">Restorasyon belgeseli · 9 ay çekim</p></a>
+      <a class="card c9 reveal" href="#"><div class="t">9 <em>/</em> İBB</div><div class="frame"><img src="../assets/w-pedalist.webp" alt="" loading="lazy" width="960" height="540"><span class="go">PROJEYİ İZLE</span></div><p class="sub">Pedalist · 2 günde çekim</p></a>
+    </div>
+    <div class="all"><a href="#">Tüm projeler</a></div>
+  </section>
+
+  <section class="contact" id="iletisim">
+    <img src="../assets/hero-albayrak.webp" alt="" loading="lazy" width="1193" height="720">
+    <div class="contact-in">
+      <ul class="big">
+        <li><a href="tel:+902122119033">0212 211 90 33<sup>ARA</sup></a></li>
+        <li><a class="mail" href="mailto:info@piktorayapim.com" lang="en">info@piktorayapim.com<sup lang="tr">YAZ</sup></a></li>
+        <li><a lang="en" href="https://www.instagram.com/piktorayapim/" target="_blank" rel="noopener">Instagram<sup lang="tr">TAKİP ET</sup></a></li>
+        <li><a lang="en" href="https://tr.linkedin.com/company/piktora-yap%C4%B1m" target="_blank" rel="noopener">LinkedIn<sup lang="tr">BAĞLAN</sup></a></li>
+      </ul>
+      <p class="addr">Esentepe Mh. Matbuat Sk. No:23, Şişli / İstanbul. Gayrettepe metrosunun Esentepe çıkışından yürüme mesafesinde.</p>
+      <div class="foot">
+        <a class="logo" href="#" aria-label="Piktora Yapım ana sayfa"><img src="../assets/logo-white.webp" width="520" height="181" alt="Piktora Production House"></a>
+        <nav aria-label="Alt menü">
+          <a href="#isler">HİZMETLER</a><a href="#isler">PROJELER</a><a href="#">YÖNETMENLER</a><a href="#biz">HAKKIMIZDA</a><a href="#">BLOG</a><a href="#iletisim">İLETİŞİM</a>
+        </nav>
+      </div>
+      <div class="legal"><span>Fikirden yayına.</span><span><a href="#">KVKK</a> · <a href="#">Çerezler</a> · © 2026 Piktora Yapım</span></div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function(){
+  var SLIDES = [
+    {client:'AXA Sigorta', title:'FİLENİN SULTANLARI', meta:['Reklam filmi','Çekim: 1 gün','Milli Voleybol Takımı ile']},
+    {client:'Beymen', title:'BALMAIN', meta:['İmaj filmi','Dila Tarkan, Sedef Gali, Dilan Gerede Erkaya']},
+    {client:'Albayrak Holding', title:'PAKİSTAN', meta:['Tanıtım filmi','İstanbul ve Pakistan','10 gün çekim, havadan görüntüleme']},
+    {client:'İstanbul Büyükşehir Belediyesi', title:'PEDALİST', meta:['Kamu spotu','30.000 çocuğa bisiklet','2 günde çekim']},
+    {client:'Ziraat Bankası', title:'RESTORASYON BELGESELİ', meta:['Belgesel','9 ay çekim','15 kişilik ekip']}
+  ];
+  var DUR = 6500;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var slides = document.querySelectorAll('.slide');
+  var credits = document.querySelector('.credits');
+  var elTitle = document.getElementById('c-title'), elClient = document.getElementById('c-client'), elMeta = document.getElementById('c-meta');
+  var elNum = document.getElementById('c-num'), bar = document.getElementById('c-bar');
+  document.getElementById('c-total').textContent = String(SLIDES.length).padStart(2, '0');
+  var cur = 0, timer = null;
+
+  function splitTitle(text){
+    elTitle.textContent = '';
+    elTitle.setAttribute('aria-label', text);
+    var i = 0, words = text.split(' ');
+    words.forEach(function(word, wi){
+      var w = document.createElement('span'); w.className = 'w'; w.setAttribute('aria-hidden', 'true');
+      Array.from(word).forEach(function(ch){
+        var c = document.createElement('span'); c.className = 'c'; c.textContent = ch; c.style.setProperty('--i', i++); w.appendChild(c);
+      });
+      elTitle.appendChild(w);
+      if (wi < words.length - 1) elTitle.appendChild(document.createTextNode(' '));
+    });
+  }
+  function show(n){
+    slides[cur].classList.remove('active');
+    cur = (n + SLIDES.length) % SLIDES.length;
+    var d = SLIDES[cur];
+    slides[cur].classList.add('active');
+    credits.classList.remove('in');
+    elClient.textContent = d.client;
+    splitTitle(d.title);
+    elMeta.textContent = '';
+    d.meta.forEach(function(m){ var sp = document.createElement('span'); sp.textContent = m; elMeta.appendChild(sp); });
+    elNum.textContent = String(cur + 1).padStart(2, '0');
+    void credits.offsetWidth;
+    requestAnimationFrame(function(){ credits.classList.add('in'); });
+    bar.classList.remove('run'); void bar.offsetWidth;
+    if (!reduce) { bar.style.setProperty('--dur', DUR + 'ms'); bar.classList.add('run'); }
+    schedule();
+  }
+  function schedule(){ clearTimeout(timer); if (!reduce && !document.hidden) timer = setTimeout(function(){ show(cur + 1); }, DUR); }
+  document.querySelector('.arrow.next').addEventListener('click', function(){ show(cur + 1); });
+  document.querySelector('.arrow.prev').addEventListener('click', function(){ show(cur - 1); });
+  document.addEventListener('visibilitychange', schedule);
+  document.addEventListener('keydown', function(e){
+    var r = document.querySelector('.hero').getBoundingClientRect();
+    if (r.bottom < 0) return;
+    if (e.key === 'ArrowRight') show(cur + 1);
+    if (e.key === 'ArrowLeft') show(cur - 1);
+  });
+  var x0 = null, y0 = null, hero = document.querySelector('.hero');
+  hero.addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, {passive:true});
+  hero.addEventListener('touchend', function(e){
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) show(cur + (dx < 0 ? 1 : -1));
+    x0 = null;
+  }, {passive:true});
+  show(0);
+
+  var menu = document.getElementById('menu'), burger = document.querySelector('.burger');
+  function setMenu(open){
+    menu.classList.toggle('open', open); menu.setAttribute('aria-hidden', String(!open));
+    burger.setAttribute('aria-expanded', String(open)); document.body.style.overflow = open ? 'hidden' : '';
+  }
+  burger.addEventListener('click', function(){ setMenu(true); });
+  document.querySelector('.menu-close').addEventListener('click', function(){ setMenu(false); });
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setMenu(false); }); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') setMenu(false); });
+
+  if ('IntersectionObserver' in window && !reduce) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if (en.isIntersecting) { en.target.classList.add('on'); io.unobserve(en.target); } });
+    }, {rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('on'); });
+  }
+})();
+</script>
+</body>
+</html>
